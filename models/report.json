@@ -1,5 +1,5 @@
 {
- "trained_at": "2026-09-25T06:56:02+00:00",
+ "trained_at": "2026-09-25T14:36:19+00:00",
  "seed": 42,
  "versions": {
   "scikit_learn": "1.6.1",
@@ -83,7 +83,7 @@
   "learning_rate": 0.1,
   "epochs": 1000,
   "l2": 0.01,
-  "train_seconds": 2.547,
+  "train_seconds": 2.766,
   "final_loss": 0.5591328379133274
  },
  "models": [
@@ -96,7 +96,7 @@
    "recall": 0.6605790645879732,
    "f1": 0.703399209486166,
    "auc": 0.7892202807321138,
-   "train_seconds": 2.547
+   "train_seconds": 2.766
   },
   {
    "key": "logreg_sklearn",
@@ -107,7 +107,7 @@
    "recall": 0.6599851521900519,
    "f1": 0.7029335020162883,
    "auc": 0.7892263855268475,
-   "train_seconds": 0.049
+   "train_seconds": 0.031
   },
   {
    "key": "naive_bayes",
@@ -118,7 +118,7 @@
    "recall": 0.6148478099480327,
    "f1": 0.6766892719993464,
    "auc": 0.7726565488861932,
-   "train_seconds": 0.021
+   "train_seconds": 0.023
   },
   {
    "key": "knn",
@@ -129,7 +129,7 @@
    "recall": 0.6803266518188568,
    "f1": 0.7102224288925058,
    "auc": 0.784022716739358,
-   "train_seconds": 0.117
+   "train_seconds": 0.112
   },
   {
    "key": "decision_tree",
@@ -140,7 +140,7 @@
    "recall": 0.6622123236822569,
    "f1": 0.70900564343057,
    "auc": 0.7912597567508945,
-   "train_seconds": 0.097
+   "train_seconds": 0.103
   },
   {
    "key": "random_forest",
@@ -151,7 +151,7 @@
    "recall": 0.6742390497401634,
    "f1": 0.713713163064833,
    "auc": 0.7991593503506104,
-   "train_seconds": 0.719
+   "train_seconds": 0.737
   },
   {
    "key": "gradient_boosting",
@@ -162,7 +162,7 @@
    "recall": 0.6859688195991092,
    "f1": 0.7183952728969056,
    "auc": 0.7998180102446222,
-   "train_seconds": 6.949
+   "train_seconds": 7.004
   }
  ],
  "cross_validation": {
