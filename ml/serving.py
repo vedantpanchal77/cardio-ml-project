@@ -92,12 +92,26 @@ class ModelService:
         self.doc = doc
         self.model = LogisticRegressionScratch.from_dict(doc["model"])
         self.scaler = Standardizer.from_dict(doc["standardizer"])
-        self.sk_models = joblib.load(d / "sklearn_models.joblib")
-        with np.load(d / "test_scores.npz") as z:
-            self.y_test = z["y_true"]
-            self.test_scores = {k: z[k] for k in z.files if k != "y_true"}
-        self._auc = {k: M.roc_auc(self.y_test, s) for k, s in self.test_scores.items()}
-        self._roc = {k: M.roc_points(self.y_test, s) for k, s in self.test_scores.items()}
+        
+        try:
+            self.sk_models = joblib.load(d / "sklearn_models.joblib")
+        except Exception:
+            self.sk_models = {}
+
+        try:
+            with np.load(d / "test_scores.npz") as z:
+                self.y_test = z["y_true"]
+                self.test_scores = {k: z[k] for k in z.files if k != "y_true"}
+        except Exception:
+            self.y_test = np.array([])
+            self.test_scores = {}
+
+        if len(self.y_test) > 0:
+            self._auc = {k: M.roc_auc(self.y_test, s) for k, s in self.test_scores.items()}
+            self._roc = {k: M.roc_points(self.y_test, s) for k, s in self.test_scores.items()}
+        else:
+            self._auc = {}
+            self._roc = {}
 
     # ---------------------------------------------------------------- loading
     @classmethod
@@ -109,11 +123,14 @@ class ModelService:
                 return cls(models_dir)
             except Exception as exc:  # corrupt or unreadable artifacts
                 if verbose:
-                    print(f"Could not load saved models ({exc!r}) - retraining ...")
-        elif verbose:
-            print("No trained models found - training now ...")
-        train_all(data_path, models_dir, verbose=verbose)
+                    print(f"Could not load saved models ({exc!r})")
+        try:
+            train_all(data_path, models_dir, verbose=verbose)
+        except Exception as exc:
+            if verbose:
+                print(f"Training skipped or read-only filesystem ({exc!r})")
         return cls(models_dir)
+
 
 
     # ------------------------------------------------------------ information
