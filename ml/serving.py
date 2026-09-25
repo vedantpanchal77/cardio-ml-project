@@ -102,22 +102,19 @@ class ModelService:
     # ---------------------------------------------------------------- loading
     @classmethod
     def load_or_train(cls, models_dir: str | Path, data_path: str | Path, verbose: bool = True):
-        """Load saved artifacts; train first if they are missing or were built with another scikit-learn."""
+        """Load saved artifacts; train first if they are missing."""
         models_dir = Path(models_dir)
         if artifacts_present(models_dir):
             try:
-                report = json.loads((models_dir / "report.json").read_text())
-                if report.get("versions", {}).get("scikit_learn") == sklearn.__version__:
-                    return cls(models_dir)
-                if verbose:
-                    print("Saved models were built with another scikit-learn version - retraining ...")
+                return cls(models_dir)
             except Exception as exc:  # corrupt or unreadable artifacts
                 if verbose:
                     print(f"Could not load saved models ({exc!r}) - retraining ...")
         elif verbose:
-            print("No trained models found - training now (about a minute) ...")
+            print("No trained models found - training now ...")
         train_all(data_path, models_dir, verbose=verbose)
         return cls(models_dir)
+
 
     # ------------------------------------------------------------ information
     def _name(self, key: str) -> str:
