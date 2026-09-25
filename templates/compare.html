@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Model Comparison - Cardiovascular Disease Prediction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
+</head>
+<body>
+
+<main class="wrap" style="padding-top:30px">
+<div class="top-bar" style="margin-bottom:20px">
+  <a href="/" style="font-size:14px;font-weight:600;text-decoration:none;color:var(--trace)">&larr; Back to Main Project</a>
+  <button class="theme-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+    <span id="themeIcon">🌙</span> <span id="themeText">Dark mode</span>
+  </button>
+</div>
+
+<div class="banner" id="apiError" role="alert" hidden></div>
+
+<section id="compare">
+  <div class="shead"><span class="snum">05</span><h2>Against other algorithms</h2></div>
+  <p class="sub tight">The same split and the same standardised features, run through six other classifiers from scikit-learn. If a hand-written logistic regression were broken, its twin from the library would expose it.</p>
+  <div class="scroller">
+  <table id="cmpTable">
+    <thead><tr><th>Model</th><th class="num">Accuracy</th><th class="num">Precision</th><th class="num">Recall</th><th class="num">F1</th><th class="num">AUC</th><th class="num">Fit time</th></tr></thead>
+    <tbody><tr><td colspan="7" class="pending">Loading…</td></tr></tbody>
+  </table>
+  </div>
+  <p class="note" id="cmpNote"></p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p style="margin:0">Cardiovascular Disease Prediction &middot; Standalone View Feature 05 &middot; Powered by Flask Backend</p>
+</footer>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

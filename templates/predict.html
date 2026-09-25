@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Try Predictor - Cardiovascular Disease Prediction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
+</head>
+<body>
+
+<main class="wrap" style="padding-top:30px">
+<div class="top-bar" style="margin-bottom:20px">
+  <a href="/" style="font-size:14px;font-weight:600;text-decoration:none;color:var(--trace)">&larr; Back to Main Project</a>
+  <button class="theme-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+    <span id="themeIcon">🌙</span> <span id="themeText">Dark mode</span>
+  </button>
+</div>
+
+<div class="banner" id="apiError" role="alert" hidden></div>
+
+<section id="predict">
+  <div class="shead"><span class="snum">06</span><h2>Try the model</h2></div>
+  <p class="sub tight">Each change below is sent to <code>POST /api/predict</code>. The backend engineers the same features as in training, standardises them with the training mean and standard deviation, and returns the probability plus each feature's push on the log-odds. That readable breakdown is what makes this model defensible in a way a neural network would not be.</p>
+  <div class="presets-bar">
+    <span class="preset-label">Quick Patient Profiles:</span>
+    <button type="button" class="preset-btn" data-preset="healthy">🟢 Low Risk (Young & Active)</button>
+    <button type="button" class="preset-btn" data-preset="borderline">🟡 Borderline Patient</button>
+    <button type="button" class="preset-btn" data-preset="high_risk">🔴 High Risk Patient</button>
+  </div>
+  <div class="grid g2">
+    <div class="panel">
+      <h3>Patient details</h3>
+      <div class="field"><label for="f_age">Age<span class="val" id="v_age">55 years</span></label><input type="range" id="f_age" min="30" max="65" value="55"></div>
+      <div class="field"><label>Sex</label><div class="seg" id="f_gender"><button data-v="1" aria-pressed="true">Woman</button><button data-v="2" aria-pressed="false">Man</button></div></div>
+      <div class="field"><label for="f_height">Height<span class="val" id="v_height">165 cm</span></label><input type="range" id="f_height" min="140" max="200" value="165"></div>
+      <div class="field"><label for="f_weight">Weight<span class="val" id="v_weight">74 kg</span></label><input type="range" id="f_weight" min="40" max="160" value="74"></div>
+      <div class="field"><label for="f_hi">Systolic pressure<span class="val" id="v_hi">120 mmHg</span></label><input type="range" id="f_hi" min="90" max="200" value="120"></div>
+      <div class="field"><label for="f_lo">Diastolic pressure<span class="val" id="v_lo">80 mmHg</span></label><input type="range" id="f_lo" min="60" max="140" value="80"></div>
+      <div class="field"><label>Cholesterol</label><div class="seg" id="f_chol"><button data-v="1" aria-pressed="true">Normal</button><button data-v="2" aria-pressed="false">Above normal</button><button data-v="3" aria-pressed="false">Well above</button></div></div>
+      <div class="field"><label>Glucose</label><div class="seg" id="f_gluc"><button data-v="1" aria-pressed="true">Normal</button><button data-v="2" aria-pressed="false">Above normal</button><button data-v="3" aria-pressed="false">Well above</button></div></div>
+      <div class="field" style="margin-bottom:0"><label>Lifestyle</label><div class="toggles" id="f_life">
+        <button data-k="smoke" aria-pressed="false">Smokes</button>
+        <button data-k="alco" aria-pressed="false">Drinks alcohol</button>
+        <button data-k="active" aria-pressed="true">Physically active</button>
+      </div></div>
+    </div>
+    <div class="readout">
+      <h3>Model output</h3>
+      <div class="gauge" id="prob">—</div>
+      <div><span class="band" id="band">waiting for the backend</span></div>
+      <p class="note" style="margin-top:14px" id="bmiNote"></p>
+      <p class="note flag" id="rangeNote" hidden></p>
+      <h3 style="margin-top:22px">Contribution to the log-odds</h3>
+      <div id="contrib"></div>
+      <p class="note" id="logitNote"></p>
+      <h3 style="margin-top:22px">What the other models say</h3>
+      <div class="others" id="others"></div>
+    </div>
+  </div>
+  <div class="warn">This is a student project trained on a public research dataset, not a diagnostic tool. It is right roughly seven times in ten, which is useful for studying a model and useless for deciding anything about a real person.</div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p style="margin:0">Cardiovascular Disease Prediction &middot; Standalone View Feature 06 &middot; Powered by Flask Backend</p>
+</footer>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

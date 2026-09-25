@@ -1,0 +1,189 @@
+{
+ "trained_at": "2026-09-25T06:56:02+00:00",
+ "seed": 42,
+ "versions": {
+  "scikit_learn": "1.6.1",
+  "numpy": "2.1.3"
+ },
+ "dataset": {
+  "raw_rows": 70000,
+  "clean_rows": 68089,
+  "removed_rows": 1911,
+  "removed_pct": 0.0273,
+  "rules": [
+   {
+    "key": "ap_hi",
+    "label": "Systolic (ap_hi)",
+    "low": 90,
+    "high": 200,
+    "unit": "mmHg",
+    "why": "Outside this range it is a typing error, not a patient",
+    "rows_failing": 421
+   },
+   {
+    "key": "ap_lo",
+    "label": "Diastolic (ap_lo)",
+    "low": 60,
+    "high": 140,
+    "unit": "mmHg",
+    "why": "Same idea: negative and five-digit readings exist in the file",
+    "rows_failing": 1158
+   },
+   {
+    "key": "bp_order",
+    "label": "Diastolic below systolic",
+    "low": null,
+    "high": null,
+    "unit": "",
+    "why": "A diastolic reading can never reach the systolic one",
+    "rows_failing": 1236
+   },
+   {
+    "key": "height",
+    "label": "Height",
+    "low": 140,
+    "high": 200,
+    "unit": "cm",
+    "why": "Removes 55 cm and 250 cm entries",
+    "rows_failing": 154
+   },
+   {
+    "key": "weight",
+    "label": "Weight",
+    "low": 40,
+    "high": 160,
+    "unit": "kg",
+    "why": "Removes 10 kg adults",
+    "rows_failing": 92
+   },
+   {
+    "key": "bmi",
+    "label": "BMI",
+    "low": 15,
+    "high": 50,
+    "unit": "",
+    "why": "Guards against impossible height and weight pairs",
+    "rows_failing": 271
+   }
+  ],
+  "positive_rate": 0.4945879657507086,
+  "mean_age_years": 53.29147275324484,
+  "mean_bmi": 27.387608054841596,
+  "mean_systolic": 126.65227863531554,
+  "n_features": 12
+ },
+ "split": {
+  "train_rows": 54471,
+  "test_rows": 13618,
+  "test_size": 0.2,
+  "stratified": true
+ },
+ "primary_model": "logreg_scratch",
+ "scratch": {
+  "learning_rate": 0.1,
+  "epochs": 1000,
+  "l2": 0.01,
+  "train_seconds": 2.547,
+  "final_loss": 0.5591328379133274
+ },
+ "models": [
+  {
+   "key": "logreg_scratch",
+   "name": "Logistic regression (from scratch)",
+   "note": "NumPy only, batch gradient descent - the SOP algorithm",
+   "accuracy": 0.7244823028344838,
+   "precision": 0.7521555367709214,
+   "recall": 0.6605790645879732,
+   "f1": 0.703399209486166,
+   "auc": 0.7892202807321138,
+   "train_seconds": 2.547
+  },
+  {
+   "key": "logreg_sklearn",
+   "name": "Logistic regression (scikit-learn)",
+   "note": "library reference; should agree with the scratch version",
+   "accuracy": 0.7241151417241886,
+   "precision": 0.7518606224627875,
+   "recall": 0.6599851521900519,
+   "f1": 0.7029335020162883,
+   "auc": 0.7892263855268475,
+   "train_seconds": 0.049
+  },
+  {
+   "key": "naive_bayes",
+   "name": "Gaussian naive Bayes",
+   "note": "assumes the features are independent",
+   "accuracy": 0.7094286973123807,
+   "precision": 0.7523619186046512,
+   "recall": 0.6148478099480327,
+   "f1": 0.6766892719993464,
+   "auc": 0.7726565488861932,
+   "train_seconds": 0.021
+  },
+  {
+   "key": "knn",
+   "name": "k-nearest neighbours",
+   "note": "k = 25, euclidean distance on standardised features",
+   "accuracy": 0.7254369217212513,
+   "precision": 0.7428664072632944,
+   "recall": 0.6803266518188568,
+   "f1": 0.7102224288925058,
+   "auc": 0.784022716739358,
+   "train_seconds": 0.117
+  },
+  {
+   "key": "decision_tree",
+   "name": "Decision tree",
+   "note": "max depth 6, at least 50 rows per leaf",
+   "accuracy": 0.7311646350418564,
+   "precision": 0.762914813547725,
+   "recall": 0.6622123236822569,
+   "f1": 0.70900564343057,
+   "auc": 0.7912597567508945,
+   "train_seconds": 0.097
+  },
+  {
+   "key": "random_forest",
+   "name": "Random forest",
+   "note": "150 trees, max depth 10",
+   "accuracy": 0.7324864150389191,
+   "precision": 0.7580968280467446,
+   "recall": 0.6742390497401634,
+   "f1": 0.713713163064833,
+   "auc": 0.7991593503506104,
+   "train_seconds": 0.719
+  },
+  {
+   "key": "gradient_boosting",
+   "name": "Gradient boosting",
+   "note": "150 shallow trees, each correcting the last",
+   "accuracy": 0.7340284917021589,
+   "precision": 0.7540394973070018,
+   "recall": 0.6859688195991092,
+   "f1": 0.7183952728969056,
+   "auc": 0.7998180102446222,
+   "train_seconds": 6.949
+  }
+ ],
+ "cross_validation": {
+  "folds": 5,
+  "fold_accuracy": [
+   0.72299,
+   0.72829,
+   0.72958,
+   0.72783,
+   0.7304
+  ],
+  "accuracy_mean": 0.7278185608188313,
+  "accuracy_std": 0.0025799108487183546,
+  "auc_mean": 0.7917041706163322,
+  "auc_std": 0.0015042377798880557
+ },
+ "sklearn_check": {
+  "max_abs_weight_diff": 0.006504382456829272,
+  "max_abs_probability_diff": 0.004638766235557257,
+  "accuracy_diff": 0.00036716111029522214,
+  "train_log_loss_scratch": 0.5591327191885451,
+  "train_log_loss_sklearn": 0.5591314185340492
+ }
+}

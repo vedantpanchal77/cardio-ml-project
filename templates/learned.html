@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What the Model Learned - Cardiovascular Disease Prediction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3">
+</head>
+<body>
+
+<main class="wrap" style="padding-top:30px">
+<div class="top-bar" style="margin-bottom:20px">
+  <a href="/" style="font-size:14px;font-weight:600;text-decoration:none;color:var(--trace)">&larr; Back to Main Project</a>
+  <button class="theme-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+    <span id="themeIcon">🌙</span> <span id="themeText">Dark mode</span>
+  </button>
+</div>
+
+<div class="banner" id="apiError" role="alert" hidden></div>
+
+<section id="weights">
+  <div class="shead"><span class="snum">04</span><h2>What the model learned</h2></div>
+  <p class="sub">Because inputs were standardised, these weights are directly comparable: each one says how much the log-odds of disease move when that feature rises by one standard deviation, holding the others fixed.</p>
+  <div class="panel"><div id="coefChart"></div></div>
+  <p class="note" id="coefNote"></p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p style="margin:0">Cardiovascular Disease Prediction &middot; Standalone View Feature 04 &middot; Powered by Flask Backend</p>
+</footer>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
